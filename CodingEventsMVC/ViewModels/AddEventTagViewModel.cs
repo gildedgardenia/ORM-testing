@@ -17,12 +17,9 @@ namespace CodingEventsMVC.ViewModels
         public List<SelectListItem> Tags { get; set; }
 
 
-
-
-
         public AddEventTagViewModel(Event theEvent, List<Tag> possibleTags)
         {
-            Tags = new List<SelectListItem>();
+            this.Tags = new List<SelectListItem>();
 
             foreach (var tag in possibleTags)
             {
@@ -36,7 +33,8 @@ namespace CodingEventsMVC.ViewModels
             Event = theEvent;
         }
 
-        public AddEventTagViewModel() { }
+        public AddEventTagViewModel() {
+        }
     }
 }
 

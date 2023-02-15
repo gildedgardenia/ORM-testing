@@ -8,20 +8,21 @@ namespace CodingEventsMVC.Models
     {
         //17
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string ContactEmail { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? ContactEmail { get; set; }
 
         //18 - creating our Foreign Key
-        public EventCategory Category { get; set; }
+        public EventCategory Category { get; set; } 
         public int CategoryId { get; set; }
 
 
-        public List<EventTag> EventTags { get; set; }  //collection navigation
-
+        //public List<EventTag> EventTags { get; set; }  //collection navigation
+        public virtual ICollection<Tag> Tags { get; set; }
 
         public Event()
         {
+            this.Tags = new HashSet<Tag>();
         }
 
         public Event(string name, string description, string contactEmail)

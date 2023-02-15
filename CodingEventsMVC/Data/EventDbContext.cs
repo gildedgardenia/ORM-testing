@@ -1,16 +1,17 @@
 ﻿using System;
 using CodingEventsMVC.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace CodingEventsMVC.Data
 {
     public class EventDbContext : DbContext
     {
         
-        public DbSet<Event> Events { get; set; }
-        public DbSet<EventCategory> Categories { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<EventTag> EventTags { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<EventCategory> Categories { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<EventTag> EventTags { get; set; }
 
         public EventDbContext(DbContextOptions<EventDbContext> options) : base(options)
         {
@@ -18,17 +19,24 @@ namespace CodingEventsMVC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //source A - used here and in Event and Tag models
-            modelBuilder.Entity<EventTag>()
-                .HasKey(et => new { et.EventId, et.TagId });
-            modelBuilder.Entity<EventTag>()
-                .HasOne(et => et.Event)
-                .WithMany(e => e.EventTags)
-                .HasForeignKey(et => et.EventId);
-            modelBuilder.Entity<EventTag>()
-                .HasOne(et => et.Tag)
-                .WithMany(t => t.EventTags)
-                .HasForeignKey(et => et.TagId);
+            //modelBuilder.Entity<Event>()
+            //.HasMany(p => p.Tags)
+            //.WithMany(p => p.Events)
+            //.UsingEntity<EventTag>(
+            //    j => j
+            //        .HasOne(pt => pt.Tag)
+            //        .WithMany(t => t.EventTags)
+            //        .HasForeignKey(pt => pt.TagId),
+            //    j => j
+            //        .HasOne(pt => pt.Event)
+            //        .WithMany(p => p.EventTags)
+            //        .HasForeignKey(pt => pt.EventId),
+            //    j =>
+            //    {
+            //j.Property(pt => pt.PublicationDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            //    j.HasKey(t => new { t.EventId, t.TagId });
+            //});
+            modelBuilder.Entity<EventTag>().HasKey(sc => new { sc.EventId, sc.TagId });
         }
     }
 }

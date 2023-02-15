@@ -65,13 +65,10 @@ namespace CodingEventsMVC.Controllers
 				int eventId = addEventTagViewModel.EventId;
 				int tagId = addEventTagViewModel.TagId;
 
-				List<EventTag> eventTags = context.EventTags
-					//.Where(et => et.EventId == eventId)
-					//.Where(et => et.TagId == tagId)
-					.ToList();
-
-				if (eventTags.Count == 0)
-				{
+				//List<EventTag> eventTags = context.EventTags
+				//	// .Where(et => et.EventId == eventId)
+				//	// .Where(et => et.TagId == tagId)
+				//	.ToList();
 					EventTag eventTag = new EventTag
 					{
 						EventId = eventId,
@@ -80,22 +77,19 @@ namespace CodingEventsMVC.Controllers
 					context.EventTags.Add(eventTag);
 					context.SaveChanges();
 			}
-
-			return Redirect("/Events/Detail/" + eventId);
-			}
 			return View(addEventTagViewModel);
 		}
 
-		public IActionResult Detail(int id)
-		{
-			List<EventTag> eventTags = context.EventTags
-				.Where(et => et.TagId == id)
-				.Include(et => et.Event)
-				.Include(et => et.Tag)
-				.ToList();
+		//public IActionResult Detail(int id)
+		//{
+		//	List<EventTag> eventTags = context.EventTags
+		//		.Where(et => et.TagId == id)
+		//		.Include(et => et.Event)
+		//		.Include(et => et.Tag)
+		//		.ToList();
 
-			return View(eventTags);
-		}
+		//	return View(eventTags);
+		//}
 	}
 }
 
